@@ -1,0 +1,77 @@
+{
+    "Res": {
+        "taxonomia": {
+            "categoria": "Proteína",
+            "subcategoria": "Animal"
+        },
+        "quimica": {
+            "gustos": [
+                "Fuerte",
+                "Umami"
+            ],
+            "sensaciones": [
+                "Metálico",
+                "Jugoso"
+            ],
+            "intensidad": "Alta"
+        },
+        "notas_estado": {
+            "crudo": [
+                "Sangriento"
+            ],
+            "cocido": [
+                "Cárnico",
+                "Tostado",
+                "Ahumado"
+            ]
+        },
+        "textura_estado": {
+            "crudo": [
+                "Firme"
+            ],
+            "cocido": [
+                "Tierna",
+                "Fibrosa"
+            ]
+        }
+    },
+    "Pollo": {
+        "taxonomia": {
+            "categoria": "Proteína",
+            "subcategoria": "Animal"
+        },
+        "quimica": {
+            "gustos": [
+                "Sutil"
+            ],
+            "sensaciones": [
+                "Metálico",
+                "Jugoso"
+            ],
+            "intensidad": "Baja"
+        },
+        "notas_estado": {
+            "crudo": [
+                "Neutro",
+                "Sangriento"
+            ],
+            "cocido": [
+                "Ahumado",
+                "Tostado",
+                "Cárnico"
+            ]
+        },
+        "textura_estado": {
+            "crudo": [
+                "Elástica",
+                "Suave",
+                "Untuosa"
+            ],
+            "cocido": [
+                "Tierna",
+                "Fibrosa",
+                "Firme"
+            ]
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "mensajes_bienvenida": [
+        "Bienvenido al Asistente de Ingeniería Gastronómica v1.0",
+        "Protocolo de análisis de ADN de ingredientes activado."
+    ],
+    "respuestas_estado": {
+        "bien": "Bot: Perfecto entonces comenzemos con los ingredientes.",
+        "mal": "Bot: Que mal escuchar eso pero yo no estoy aqui para eso, pasemos a lo que sigue.",
+        "desconocido": "Bot: Entendido. Procedamos con el análisis del sistema."
+    },
+    "mensajes_error": {
+        "no_encontrado": "Bot: No reconozco ese ingrediente. Iniciando protocolo de adquisición..."
+    },
+    "despedida": "Cerrando sesión. Base de conocimientos actualizada y segura."
+}

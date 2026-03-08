@@ -9,7 +9,7 @@ SUB_CAT = {
 }
 GUSTOS = ("Salado", "Dulce", "Ácido", "Amargo", "Umami", "Graso", "Sutil", "Fuerte")
 SENSACIONES = ("Picante", "Enchiloso", "Astringente", "Fresco", "Cálido", "Metálico", "Jugoso")
-NOTAS = ("Frutal", "Herbal", "Floral", "Amaderado", "Terroso", "Tostado", "Cítrico", "Lácteo", "Marino", "Ahumado", "Sangriento", "Cárnico", "Neutro")
+NOTAS = ("Frutal", "Herbal", "Floral", "Amaderado", "Terroso", "Tostado", "Cítrico", "Lácteo", "Marino", "Ahumado", "Sangriento", "Cárnico")
 TEXTURAS = ("Firme", "Crujiente", "Suave", "Fibrosa", "Untuosa", "Líquida", "Granulosa", "Elástica", "Tierna", "Resistente")
 INTENSIDADES = ("Baja", "Media", "Alta")
 

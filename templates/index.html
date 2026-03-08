@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SISTEMA EXPERTO GASTRONÓMICO</title>
+    <style>
+        /* CSS: Diseño Mecatrónico y Limpio */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: #252526; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .chat-box { height: 300px; overflow-y: auto; border: 1px solid #3e3e42; padding: 15px; margin-bottom: 20px; background: #1e1e1e; border-radius: 4px; }
+        .bot-msg { color: #4ec9b0; margin-bottom: 10px; }
+        .user-msg { color: #ce9178; text-align: right; margin-bottom: 10px; }
+        input, select, button { background: #3c3c3c; color: white; border: 1px solid #555; padding: 10px; border-radius: 4px; }
+        button { cursor: pointer; background: #007acc; transition: 0.3s; }
+        button:hover { background: #005a9e; }
+        .hidden { display: none; }
+        .grid-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🤖 Sistema Experto: Adquisición de Conocimiento</h2>
+        
+        <div id="chatDisplay" class="chat-box"></div>
+
+        <div id="faseEstado">
+            <input type="text" id="inputEstado" placeholder="¿Cómo te encuentras hoy?">
+            <button onclick="procesarEstado()">Enviar</button>
+        </div>
+
+        <div id="menuPrincipal" class="hidden">
+            <button onclick="mostrarConsulta()">1. Consultar Ingrediente</button>
+            <button onclick="mostrarRegistro()">2. Ingresar Nuevo</button>
+        </div>
+
+        <div id="formRegistro" class="hidden">
+            <h3>📝 Registro de Ingrediente</h3>
+            <input type="text" id="regNombre" placeholder="Nombre (ej. Pollo, Res (Corte))"><br><br>
+            
+            <label>Categoría:</label>
+            <select id="regCat" onchange="actualizarSubCat()"></select>
+            <select id="regSubCat"></select><br><br>
+
+            <label>Gustos:</label>
+            <div id="checkGustos" class="grid-options"></div>
+
+            <label>Notas (Cocido):</label>
+            <div id="checkNotasCocido" class="grid-options"></div>
+
+            <label>Texturas (Cocido):</label>
+            <div id="checkTexturasCocido" class="grid-options"></div>
+
+            <button onclick="enviarIngrediente()">Guardar en JSON</button>
+            <button onclick="volverMenu()" style="background:#555">Cancelar</button>
+        </div>
+
+        <div id="areaConsulta" class="hidden">
+            <h3>🔍 Consulta de Base de Datos</h3>
+            <div id="listaIngredientes"></div>
+            <button onclick="volverMenu()" style="background:#555">Volver</button>
+        </div>
+    </div>
+
+    <script>
+        // JS: Lógica de Interacción Corregida
+        let configGlobal = {};
+        let interfazGlobal = {};
+
+        window.onload = async () => {
+            const resConf = await fetch('/get_config');
+            configGlobal = await resConf.json();
+            
+            const resInt = await fetch('/get_interfaz');
+            interfazGlobal = await resInt.json();
+
+            const display = document.getElementById('chatDisplay');
+            interfazGlobal.mensajes_bienvenida.forEach(m => {
+                display.innerHTML += `<div class="bot-msg">Bot: ${m}</div>`;
+            });
+            display.innerHTML += `<div class="bot-msg">Bot: Antes de empezar, ¿cómo te encuentras el día de hoy?</div>`;
+        };
+
+        async function procesarEstado() {
+            const input = document.getElementById('inputEstado').value.toLowerCase();
+            const display = document.getElementById('chatDisplay');
+            display.innerHTML += `<div class="user-msg">${input}</div>`;
+
+            let r = interfazGlobal.respuestas_estado;
+            // Lógica exacta de tus respuestas guardadas en JSON
+            let msg = input.includes('bien') ? r.bien : (input.includes('mal') ? r.mal : r.desconocido);
+            
+            display.innerHTML += `<div class="bot-msg">${msg}</div>`;
+            document.getElementById('faseEstado').classList.add('hidden');
+            document.getElementById('menuPrincipal').classList.remove('hidden');
+        }
+
+        function mostrarRegistro() {
+            document.getElementById('menuPrincipal').classList.add('hidden');
+            document.getElementById('formRegistro').classList.remove('hidden');
+    
+        // CORRECCIÓN: Llenar categorías usando la llave 'cat_sistema'
+            const catSelect = document.getElementById('regCat');
+            catSelect.innerHTML = configGlobal.cat_sistema.map(c => `<option value="${c}">${c}</option>`).join('');
+    
+            actualizarSubCat(); // Esto cargará automáticamente "Animal, Vegetal" si está en Proteína
+
+            generarChecks('checkGustos', configGlobal.gustos);
+            generarChecks('checkNotasCocido', configGlobal.notas);
+            generarChecks('checkTexturasCocido', configGlobal.texturas);
+        }
+
+    function actualizarSubCat() {
+            const catPrincipal = document.getElementById('regCat').value;
+            const subSelect = document.getElementById('regSubCat');
+    // Mapeo dinámico usando la jerarquía de SUB_CAT
+            const opciones = configGlobal.sub_cat[catPrincipal] || [];
+            subSelect.innerHTML = opciones.map(s => `<option value="${s}">${s}</option>`).join('');
+        }
+
+        function generarChecks(containerId, lista) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = lista.map(item => `
+                <label><input type="checkbox" value="${item}"> ${item}</label>
+            `).join('');
+        }
+
+        async function enviarIngrediente() {
+            const data = {
+                nombre: document.getElementById('regNombre').value,
+                taxonomia: { 
+                    categoria: document.getElementById('regCat').value, 
+                    subcategoria: document.getElementById('regSubCat').value 
+                },
+                quimica: {
+                    gustos: getChecked('checkGustos'),
+                    sensaciones: [], // Se pueden añadir más checks después
+                    intensidad: "Media"
+                },
+                notas_estado: { crudo: [], cocido: getChecked('checkNotasCocido') },
+                textura_estado: { crudo: [], cocido: getChecked('checkTexturasCocido') }
+            };
+
+            const res = await fetch('/guardar_ingrediente', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            
+            const result = await res.json();
+            alert(result.message);
+            volverMenu();
+        }
+
+        function getChecked(id) {
+            return Array.from(document.querySelectorAll(`#${id} input:checked`)).map(c => c.value);
+        }
+
+        function volverMenu() {
+            document.getElementById('formRegistro').classList.add('hidden');
+            document.getElementById('areaConsulta').classList.add('hidden');
+            document.getElementById('menuPrincipal').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

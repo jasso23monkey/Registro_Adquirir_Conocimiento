@@ -88,12 +88,102 @@
             "intensidad": "Media"
         },
         "notas_estado": {
-            "crudo": [],
-            "cocido": []
+            "crudo": [
+                "Frutal",
+                "Cítrico"
+            ],
+            "cocido": [
+                "Frutal",
+                "Herbal",
+                "Neutro"
+            ]
         },
         "textura_estado": {
-            "crudo": [],
-            "cocido": []
+            "crudo": [
+                "Firme",
+                "Crujiente"
+            ],
+            "cocido": [
+                "Firme",
+                "Suave"
+            ]
+        }
+    },
+    "Proba": {
+        "taxonomia": {
+            "categoria": "Otros",
+            "subcategoria": "Grano"
+        },
+        "quimica": {
+            "gustos": [
+                "Salado",
+                "Dulce",
+                "Ácido",
+                "Amargo",
+                "Umami",
+                "Graso",
+                "Sutil",
+                "Fuerte"
+            ],
+            "sensaciones": [],
+            "intensidad": "Media"
+        },
+        "notas_estado": {
+            "crudo": [
+                "Frutal",
+                "Herbal",
+                "Floral",
+                "Amaderado",
+                "Terroso",
+                "Tostado",
+                "Cítrico",
+                "Lácteo",
+                "Marino",
+                "Ahumado",
+                "Sangriento",
+                "Cárnico",
+                "Neutro"
+            ],
+            "cocido": [
+                "Frutal",
+                "Herbal",
+                "Floral",
+                "Terroso",
+                "Tostado",
+                "Cítrico",
+                "Lácteo",
+                "Marino",
+                "Ahumado",
+                "Sangriento",
+                "Cárnico",
+                "Neutro"
+            ]
+        },
+        "textura_estado": {
+            "crudo": [
+                "Firme",
+                "Crujiente",
+                "Suave",
+                "Fibrosa",
+                "Untuosa",
+                "Líquida",
+                "Granulosa",
+                "Elástica",
+                "Tierna",
+                "Resistente"
+            ],
+            "cocido": [
+                "Firme",
+                "Crujiente",
+                "Suave",
+                "Fibrosa",
+                "Untuosa",
+                "Líquida",
+                "Granulosa",
+                "Elástica",
+                "Tierna",
+                "Resistente"
+            ]
         }
     }
 }
